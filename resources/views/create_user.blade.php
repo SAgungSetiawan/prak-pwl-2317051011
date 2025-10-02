@@ -1,35 +1,28 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
+    <h1 class="mb-3">Buat Pengguna Baru</h1>
+    <form action="{{ route('user.store') }}" method="POST" class="card p-4 shadow-sm">
+        @csrf
+        <div class="mb-3">
+            <label for="nama" class="form-label">Nama</label>
+            <input type="text" id="nama" name="nama" class="form-control">
+        </div>
 
-<div>
-    <h1>Buat Pengguna Baru</h1>
+        <div class="mb-3">
+            <label for="npm" class="form-label">NPM</label>
+            <input type="text" id="npm" name="npm" class="form-control">
+        </div>
 
-    <form action="{{route('user.store') }}" method="POST">
-        @csrf 
+        <div class="mb-3">
+            <label for="kelas_id" class="form-label">Kelas</label>
+            <select name="kelas_id" id="kelas_id" class="form-select">
+                @foreach ($kelas as $kelasItem)
+                    <option value="{{ $kelasItem->id }}">{{ $kelasItem->nama_kelas }}</option>
+                @endforeach
+            </select>
+        </div>
 
-        <label for="nama">Nama:</label> <br>
-
-        <input type="text" id="nama" name="nama"><br><br>
-
-        <label for="npm">NPM:</label> <br>
-
-        <input type="text" id="npm" name="npm"><br><br>
- 
-        <label for="kelas">Kelas:</label> <br>
-
-        <select name="kelas_id" id="kelas_id">
-            @foreach ($kelas as $kelasItem)
-
-            <option value="{{$kelasItem->id}}">{{$kelasItem->nama_kelas}}</option>
-
-            @endforeach
-
-        </select><br><br>
-
-        <button type="submit">Submit</button>
-
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-</div>
-
 @endsection

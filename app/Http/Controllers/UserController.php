@@ -44,4 +44,37 @@ class UserController extends Controller
 
         return view('list_user', compact('users', 'title'));
     }
+
+// Edit data user
+public function edit($id)
+{
+    $user = UserModel::findOrFail($id);
+    $kelas = Kelas::all();
+    $title = "Edit Pengguna";
+
+    return view('edit_user', compact('user', 'kelas', 'title'));
+}
+
+// Update data user
+public function update(Request $request, $id)
+{
+    $user = UserModel::findOrFail($id);
+
+    $user->update([
+        'nama' => $request->input('nama'),
+        'npm' => $request->input('npm'),
+        'kelas_id' => $request->input('kelas_id'),
+    ]);
+
+    return redirect()->route('user.store')->with('success', 'Data berhasil diperbarui!');
+}
+public function destroy($id)
+{
+    $user = UserModel::findOrFail($id);
+    $user->delete();
+
+    return redirect()->route('user.store')->with('success', 'Data berhasil dihapus!');
+}
+
+
 }

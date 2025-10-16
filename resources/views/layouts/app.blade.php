@@ -10,9 +10,24 @@
 <body>
     @include('components.navbar')
 
-    <div class="container">
-        @yield('content')
-    </div>
+    <main class="container mb-5">
+        {{-- Alert Notifikasi --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+<div class="container mb-5" style="padding-bottom: 80px;">
+    @yield('content')
+</div>
+
 
     @include('components.footer')
 

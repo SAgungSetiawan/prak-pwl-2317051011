@@ -4,15 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class UserModel extends Model
 {
     use HasFactory;
 
-    // arahkan ke tabel yang benar
-    protected $table = 'user'; // kalau di DB namanya `users`, ubah ke 'users'
-
+    protected $table = 'user';
     protected $fillable = ['nama', 'npm', 'kelas_id'];
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+    }
 
     public function getUser()
     {
